@@ -26,7 +26,9 @@ export default function TitleCard({
       <div className="divider mt-2"></div>
 
       {/** Card Body */}
-      <div className="h-full w-full">{children}</div>
+      <div className="h-full w-full" style={{ marginTop: "24px" }}>
+        {children}
+      </div>
     </div>
   );
 }

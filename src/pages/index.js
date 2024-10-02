@@ -30,7 +30,7 @@ export default function Home() {
         style={{
           textAlign: "center",
           backgroundColor: "#223345",
-          fontSize: "27px;",
+          fontSize: "27px",
         }}
       >
         <button

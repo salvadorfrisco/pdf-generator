@@ -7,9 +7,10 @@ import StackBarChart from "./components/StackBarChart";
 import PieChartCategory from "./components/PieChartCategory";
 import DoughnutChartStrategy from "./components/DoughnutChartStrategy";
 import PieChartEarnings from "./components/PieChartEarnings";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import React from "react";
+import { getFaturasData } from "../../useCases/fetchFaturasUseCase";
 
 // Memoize os componentes de gráficos
 const MemoizedDoughnutChart = React.memo(DoughnutChart);
@@ -47,21 +48,36 @@ export function Charts() {
     []
   );
 
+  const [faturas, setFaturas] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getFaturasData();
+        setFaturas(data); // Aqui você pode usar os dados das faturas para seus gráficos
+      } catch (error) {
+        console.error("Erro ao carregar faturas:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  console.log("faturas", faturas);
+
   return (
     <div
-      style={{
-        textAlign: "center",
-        backgroundColor: "#324355",
-        paddingTop: "40px",
-        paddingBottom: "40px",
-        color: "#F7F7F7",
-        fontFamily: "Poppins, sans-serif",
-        minWidth: "100vw",
-        margin: "0 auto",
-      }}
-      className="bg-slate-600 min-h-screen"
+      // style={{
+      //   // textAlign: "center",
+      //   backgroundColor: "#324355",
+      //   paddingTop: "40px",
+      //   color: "#F7F7F7",
+      //   fontFamily: "Poppins, sans-serif",
+      //   margin: "0 auto",
+      // }}
+      className="bg-slate-700 min-h-screen relative min-w-min"
     >
-      <header className="navbar bg-base-100 p-4 bg-slate-600 text-white flex justify-between items-center">
+      <header className="navbar bg-base-100 p-4 bg-slate-600 text-white flex">
         <Image
           src="/logo-psr-invest-light-transp.png"
           alt="Logo"
@@ -69,13 +85,13 @@ export function Charts() {
           height={47}
           className="mr-2 min-w-32"
         />
-        <div className="flex flex-col items-end">
+        {/* <div className="flex flex-col items-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <Image src="/avatar.png" alt="Avatar" width={40} height={40} />
             </div>
           </label>
-        </div>
+        </div> */}
       </header>
 
       <div
